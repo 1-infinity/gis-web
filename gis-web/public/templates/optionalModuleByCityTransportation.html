@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>预案生成系统</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta name="author" content="" />
+    <!-- Facebook and Twitter integration -->
+    <meta property="og:title" content=""/>
+    <meta property="og:image" content=""/>
+    <meta property="og:url" content=""/>
+    <meta property="og:site_name" content=""/>
+    <meta property="og:description" content=""/>
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:image" content="" />
+    <meta name="twitter:url" content="" />
+    <meta name="twitter:card" content="" />
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <link href='https://fonts.useso.com/css?family=Roboto:400,100,300,600,400italic,700' rel='stylesheet' type='text/css'>
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="css/animate.css">
+    <!-- Flexslider -->
+    <link rel="stylesheet" href="css/flexslider.css">
+    <!-- Icomoon Icon Fonts-->
+    <link rel="stylesheet" href="css/icomoon.css">
+    <!-- Magnific Popup -->
+    <link rel="stylesheet" href="css/magnific-popup.css">
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" href="css/bootstrap.css">
+
+    <!--
+    Default Theme Style
+    You can change the style.css (default color purple) to one of these styles
+
+
+
+    -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Styleswitcher ( This style is for demo purposes only, you may delete this anytime. ) -->
+    <link rel="stylesheet" id="theme-switch" href="css/style.css">
+    <!-- End demo purposes only -->
+
+<!--    勾选的样式-->
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/cstyle.css">
+
+<!--  确认选择按钮的样式-->
+    <link href="css/default.css" rel="stylesheet" type="text/css" />
+
+    <style>
+        /* For demo purpose only */
+
+        /*
+        GREEN
+        8dc63f
+        RED
+        FA5555
+        TURQUOISE
+        27E1CE
+        BLUE
+        2772DB
+        ORANGE
+        FF7844
+        YELLOW
+        FCDA05
+        PINK
+        F64662
+        PURPLE
+        7045FF
+
+        */
+
+        /* For Demo Purposes Only ( You can delete this anytime :-) */
+        #colour-variations {
+            padding: 10px;
+            -webkit-transition: 0.5s;
+            -o-transition: 0.5s;
+            transition: 0.5s;
+            width: 140px;
+            position: fixed;
+            left: 0;
+            top: 100px;
+            z-index: 999999;
+            background: #fff;
+            /*border-radius: 4px;*/
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            -webkit-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+            -moz-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+            -ms-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+            box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+        }
+        #colour-variations.sleep {
+            margin-left: -140px;
+        }
+        #colour-variations h3 {
+            text-align: center;;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #777;
+            margin: 0 0 10px 0;
+            padding: 0;;
+        }
+
+        #colour-variations ul,
+        #colour-variations ul li {
+            padding: 0;
+            margin: 0;
+        }
+        #colour-variations ul {
+            margin-bottom: 20px;
+            float: left;
+        }
+        #colour-variations li {
+            list-style: none;
+            display: inline;
+        }
+        #colour-variations li a {
+            width: 20px;
+            height: 20px;
+            position: relative;
+            float: left;
+            margin: 5px;
+        }
+
+
+
+        #colour-variations li a[data-theme="style"] {
+            background: #8dc63f;
+        }
+        #colour-variations li a[data-theme="red"] {
+            background: #FA5555;
+        }
+        #colour-variations li a[data-theme="turquoise"] {
+            background: #27E1CE;
+        }
+        #colour-variations li a[data-theme="blue"] {
+            background: #2772DB;
+        }
+        #colour-variations li a[data-theme="orange"] {
+            background: #FF7844;
+        }
+        #colour-variations li a[data-theme="yellow"] {
+            background: #FCDA05;
+        }
+        #colour-variations li a[data-theme="pink"] {
+            background: #F64662;
+        }
+        #colour-variations li a[data-theme="purple"] {
+            background: #7045FF;
+        }
+
+        #colour-variations a[data-layout="boxed"],
+        #colour-variations a[data-layout="wide"] {
+            padding: 2px 0;
+            width: 48%;
+            border: 1px solid #ededed;
+            text-align: center;
+            color: #777;
+            display: block;
+        }
+        #colour-variations a[data-layout="boxed"]:hover,
+        #colour-variations a[data-layout="wide"]:hover {
+            border: 1px solid #777;
+        }
+        #colour-variations a[data-layout="boxed"] {
+            float: left;
+        }
+        #colour-variations a[data-layout="wide"] {
+            float: right;
+        }
+
+        .option-toggle {
+            position: absolute;
+            right: 0;
+            top: 0;
+            margin-top: 5px;
+            margin-right: -30px;
+            width: 30px;
+            height: 30px;
+            background: #8dc63f;
+            text-align: center;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+            -webkit-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+            -moz-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+            -ms-box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+            box-shadow: 0 0 9px 0 rgba(0,0,0,.1);
+        }
+        .option-toggle i {
+            top: 2px;
+            position: relative;
+        }
+        .option-toggle:hover, .option-toggle:focus, .option-toggle:active {
+            color:  #fff;
+            text-decoration: none;
+            outline: none;
+        }
+
+        /*勾选用的*/
+        .list-group-item {
+            display:flex;
+            align-items: center;
+            padding-left: 30px;
+        }
+        .check-trail {
+            width: 40px;
+            height: 26px;
+        }
+        .check-handler {
+            width: 14px;
+            height: 14px;
+        }
+        .big {
+            font-size: 21px;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        .big2 {
+            font-size: 16px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .check-trail {
+            margin-bottom: 0px;
+        }
+        .list-group-item-sub {
+            padding-left: 50px;
+        }
+    </style>
+    <!-- End demo purposes only -->
+
+
+    <!-- Modernizr JS -->
+    <script src="js/modernizr-2.6.2.min.js"></script>
+    <!-- FOR IE9 below -->
+    <!--[if lt IE 9]>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+
+<!--
+    INFO:
+    Add 'boxed' class to body element to make the layout as boxed style.
+    Example:
+    <body class="boxed">
+-->
+<body>
+
+
+
+<!-- Loader -->
+<div class="fh5co-loader"></div>
+
+<!--<div id="fh5co-page">-->
+<!--    <section id="fh5co-header">-->
+<!--        <div class="container">-->
+<!--            <nav role="navigation">-->
+<!--                <ul class="pull-left left-menu">-->
+<!--                    &lt;!&ndash;                    <li><a href="about.html">About</a></li>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    <li><a href="tour.html">Tour</a></li>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                    <li><a href="pricing.html">Pricing</a></li>&ndash;&gt;-->
+<!--                </ul>-->
+<!--                &lt;!&ndash;                <h1 id="fh5co-logo"><a href="index.html">guide<span>.</span></a></h1>&ndash;&gt;-->
+<!--                <ul class="pull-right right-menu">-->
+<!--                    &lt;!&ndash;                    <li><a href="#">Login</a></li>&ndash;&gt;-->
+<!--                    <li class="fh5co-cta-btn"><a href="/login">Logout</a></li>-->
+<!--                </ul>-->
+<!--            </nav>-->
+<!--        </div>-->
+<!--    </section>-->
+<!--    &lt;!&ndash; #fh5co-header &ndash;&gt;-->
+
+<!--    <section id="fh5co-hero" class="js-fullheight" style="background-image: url(images/hero_bg.jpg);" data-next="yes">-->
+<!--        <div class="fh5co-overlay"></div>-->
+<!--        <div class="container">-->
+<!--            <div class="fh5co-intro js-fullheight">-->
+<!--                <div class="fh5co-intro-text">-->
+<!--                    &lt;!&ndash;-->
+<!--                        INFO:-->
+<!--                        Change the class to 'fh5co-right-position' or 'fh5co-center-position' to change the layout position-->
+<!--                        Example:-->
+<!--                        <div class="fh5co-right-position">-->
+<!--                    &ndash;&gt;-->
+<!--                    <div class="fh5co-left-position">-->
+<!--                        <h2 class="animate-box">预案生成系统</h2>-->
+<!--                        &lt;!&ndash;                        <p class="animate-box"><a href="" class="btn btn-outline popup-vimeo btn-video"><i class="icon-play2"></i> Watch video</a> <a href="" target="_blank" class="btn btn-primary">Visit </a></p>&ndash;&gt;-->
+<!--                        <p class="animate-box"><a href="" class="btn btn-outline popup-vimeo btn-video"><i class="icon-play2"></i> 了解更多 </a> <a href="" target="_blank" class="btn btn-primary">了解更多 </a></p>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="fh5co-learn-more animate-box">-->
+<!--            <a href="#" class="scroll-btn">-->
+<!--                <span class="text">开始使用</span>-->
+<!--                <span class="arrow"><i class="icon-chevron-down"></i></span>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--    </section>-->
+<!--    &lt;!&ndash; END #fh5co-hero &ndash;&gt;-->
+
+
+    <section id="fh5co-projects">
+        <div class="container">
+            <div class="row row-bottom-padded-md">
+                <div class="col-md-6 col-md-offset-3 text-center">
+                    <h2 class="fh5co-lead animate-box">请选择</h2>
+                    <p class="fh5co-sub-lead animate-box">您想要使用的预案模板</p>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-md-4 col-sm-6 col-xxs-12 animate-box">
+                    <a href="/templates/modifyTemplateCataNJTransportation.html" class="fh5co-project-item">
+                        <img src="images/img_4.jpg" alt="Image" class="img-responsive">
+                        <div class="fh5co-text">
+                            <h2>城市：南京市</h2>
+                            <p>《2018年南京市城市公共交通突发事件应急预案》</p>
+                            <div align="center">
+                                <input id="chck_1" type="checkbox" class="chck" value="modifyTemplateCataNJTransportation">
+                                <label for="chck_1" class="check-trail">
+                                    <span class="check-handler"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xxs-12 animate-box">
+                    <a href="/templates/modifyTemplateCataGZTransportation.html" class="fh5co-project-item">
+                        <img src="images/img_5.jpg" alt="Image" class="img-responsive">
+                        <div class="fh5co-text">
+                            <h2>城市：广州市</h2>
+                            <p>《2014年广州市道路交通相关事故应急预案》</p>
+                            <div align="center">
+                                <input id="chck_2" type="checkbox" class="chck" value="modifyTemplateCataGZTransportation">
+                                <label for="chck_2" class="check-trail">
+                                    <span class="check-handler"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xxs-12 animate-box">
+                    <a href="/templates/modifyTemplateCataSZTransportation.html" class="fh5co-project-item">
+                        <img src="images/img_6.jpg" alt="Image" class="img-responsive">
+                        <div class="fh5co-text">
+                            <h2>城市：深圳市</h2>
+                            <p>《2016深圳市处置道路交通突发事件应急预案》</p>
+                            <div align="center">
+                                <input id="chck_3" type="checkbox" class="chck" value="modifyTemplateCataSZTransportation">
+                                <label for="chck_3" class="check-trail">
+                                    <span class="check-handler"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!--                <div class="col-md-4 col-sm-6 col-xxs-12 animate-box">-->
+                <!--                    <a href="images/img_4.jpg" class="fh5co-project-item image-popup">-->
+                <!--                        <img src="images/img_4.jpg" alt="Image" class="img-responsive">-->
+                <!--                        <div class="fh5co-text">-->
+                <!--                            <h2>Puppy & I in the Farm</h2>-->
+                <!--                            <p>Far far away, behind the word mountains, far from the countries Vokalia..</p>-->
+                <!--                        </div>-->
+                <!--                    </a>-->
+                <!--                </div>-->
+
+                <!--                <div class="col-md-4 col-sm-6 col-xxs-12 animate-box">-->
+                <!--                    <a href="images/img_5.jpg" class="fh5co-project-item image-popup">-->
+                <!--                        <img src="images/img_5.jpg" alt="Image" class="img-responsive">-->
+                <!--                        <div class="fh5co-text">-->
+                <!--                            <h2>A Big Wave of the Blue Sea</h2>-->
+                <!--                            <p>Far far away, behind the word mountains, far from the countries Vokalia..</p>-->
+                <!--                        </div>-->
+                <!--                    </a>-->
+                <!--                </div>-->
+
+                <!--                <div class="col-md-4 col-sm-6 col-xxs-12 animate-box">-->
+                <!--                    <a href="images/img_6.jpg" class="fh5co-project-item image-popup">-->
+                <!--                        <img src="images/img_6.jpg" alt="Image" class="img-responsive">-->
+                <!--                        <div class="fh5co-text">-->
+                <!--                            <h2>Foggy Pine Trees</h2>-->
+                <!--                            <p>Far far away, behind the word mountains, far from the countries Vokalia..</p>-->
+                <!--                        </div>-->
+                <!--                    </a>-->
+                <!--                </div>-->
+
+
+            </div>
+            <p align="center" class="button-style"><a href="javascript:goNext()">点击查看目录</a></p>
+        </div>
+
+
+    </section>
+
+
+
+    <footer id="fh5co-footer">
+
+        <div class="fh5co-copyright animate-box">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="fh5co-left"><small>Copyright &copy; 2021.<a target="_blank" href="http://sc.chinaz.com/moban/"></a></small></p>
+                        <p class="fh5co-right"><small class="fh5co-right"></small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!--    &lt;!&ndash; END #fh5co-footer &ndash;&gt;-->
+    <!--</div>-->
+    <!-- END #fh5co-page -->
+
+    <!-- For demo purposes Only ( You may delete this anytime :-) -->
+<!--    <div id="colour-variations">-->
+<!--        <a class="option-toggle"><i class="icon-gear"></i></a>-->
+<!--        <h3>Preset Colors</h3>-->
+<!--        <ul>-->
+<!--            <li><a href="javascript: void(0);" data-theme="style"></a></li>-->
+<!--            <li><a href="javascript: void(0);" data-theme="red"></a></li>-->
+<!--            <li><a href="javascript: void(0);" data-theme="turquoise"></a></li>-->
+<!--            <li><a href="javascript: void(0);" data-theme="blue"></a></li>-->
+<!--            <li><a href="javascript: void(0);" data-theme="orange"></a></li>-->
+<!--            <li><a href="javascript: void(0);" data-theme="yellow"></a></li>-->
+<!--            <li><a href="javascript: void(0);" data-theme="pink"></a></li>-->
+<!--            <li><a href="javascript: void(0);" data-theme="purple"></a></li>-->
+<!--        </ul>-->
+<!--        <a href="#" data-layout="boxed">Boxed</a>-->
+<!--        <a href="#" data-layout="wide">Wide</a>-->
+<!--    </div>-->
+    <!-- End demo purposes only -->
+
+
+    <!-- jQuery -->
+    <script src="js/jquery.min.js"></script>
+    <!-- jQuery Easing -->
+    <script src="js/jquery.easing.1.3.js"></script>
+    <!-- Bootstrap -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Waypoints -->
+    <script src="js/jquery.waypoints.min.js"></script>
+    <!-- Flexslider -->
+    <script src="js/jquery.flexslider-min.js"></script>
+    <!-- Magnific Popup -->
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/magnific-popup-options.js"></script>
+
+    <!-- For demo purposes only styleswitcher ( You may delete this anytime ) -->
+    <script src="js/jquery.style.switcher.js"></script>
+
+    <script>
+        $(function(){
+            $('#colour-variations ul').styleSwitcher({
+                defaultThemeId: 'theme-switch',
+                hasPreview: false,
+                cookie: {
+                    expires: 30,
+                    isManagingLoad: true
+                }
+            });
+            $('.option-toggle').click(function() {
+                $('#colour-variations').toggleClass('sleep');
+            });
+        });
+    </script>
+    <!-- End demo purposes only -->
+
+    <!-- Main JS (Do not remove) -->
+    <script src="js/main.js"></script>
+    <script src="js/jquery.cookie.js"></script>
+    <script>
+        $(function(){
+
+            if ( $.cookie('layoutCookie') != '' ) {
+                $('body').addClass($.cookie('layoutCookie'));
+            }
+
+            $('a[data-layout="boxed"]').click(function(event){
+                event.preventDefault();
+                $.cookie('layoutCookie', 'boxed', { expires: 7, path: '/'});
+                $('body').addClass($.cookie('layoutCookie')); // the value is boxed.
+            });
+
+            $('a[data-layout="wide"]').click(function(event){
+                event.preventDefault();
+                $('body').removeClass($.cookie('layoutCookie')); // the value is boxed.
+                $.removeCookie('layoutCookie', { path: '/' }); // remove the value of our cookie 'layoutCookie'
+            });
+        });
+    </script>
+
+
+
+<!-- 选择展示的页面 -->
+<script type="text/javascript" src="js/hint.message.js"></script>
+<script>
+    function goNext(){
+        var chkArr = new Array();
+        $('.chck:checked').each(function(i,e){
+            chkArr.push($(this).val());
+        });
+        if(!chkArr.length ){
+            $.message({
+                message:'请至少选择一份预案模板',
+                type:'error'
+            });
+            return false;
+        }
+        if(chkArr.length >2){
+            $.message({
+                message:'最多只能选择两份预案模板',
+                type:'error'
+            });
+            return false;
+        }
+        localStorage.setItem("chkArr", chkArr.join(','));
+        window.location.href = './'+chkArr.join('_') + '.html';
+    }
+</script>
+
+
+</body>
+</html>
+

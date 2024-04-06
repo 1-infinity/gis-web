@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input id="sex" type="text" th:value="${user_name}"/>
+<input id="phone" type="text" th:value="${user_name}"/>
+
+
+
+
+</body>
+
+<script th:inline="javascript">
+    var name = [[${user_name}]];
+    $.each(list,function (key, value) {
+        console.log(key,value);
+    })
+</script>
+
+
+</html>

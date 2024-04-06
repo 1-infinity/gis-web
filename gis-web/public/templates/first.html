@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+<div>
+  iframe页面插入
+
+  <p align="center" class="button-style" style="position: fixed;right: 0;top: 150px;"><a href="javascript:b()">一键整理目录</a></p>
+
+</div>
+
+</body>
+<script>
+  // function b(){
+  //   // console.log(window.parent)
+  //   console.log("aaa")
+  //   window.parent['goBack']();
+  // }
+
+  function b(){
+    window.addEventListener('message', (ev) => {
+      var data = ev.data;
+      //下面可以调用我们html页面js中的方法，使用传递的数据进 行操作了
+      console.log(data);
+    }, false);
+  }
+
+</script>
+
+
+
+</html>
