@@ -18,8 +18,9 @@ public class PlanQueryController {
     }
 
 
-    public ResponseResult getTextByTitle(@RequestParam String title) {
-        return planQueryService.getTextByTitle(title);
+    @GetMapping("/planQuery/getTextByTitle")
+    public ResponseResult getTextByTitle(@RequestParam Integer documentId, String title) {
+        return planQueryService.getTextByTitle(documentId, title);
     }
 
 }

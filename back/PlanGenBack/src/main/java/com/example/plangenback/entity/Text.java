@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 public class Text {
     @TableId
     private Integer id;
+    private Integer documentId;
     private Integer parentTitleId;
     private String content;
 }
