@@ -5,5 +5,5 @@ import com.example.plangenback.model.ResponseResult;
 
 public interface PlanQueryService {
     public ResponseResult getAllTitleByCityAndDisaster(String city, String disaster);
-    public ResponseResult getTextByTitle(String title);
+    public ResponseResult getTextByTitle(Integer documentId, String title);
 }

@@ -48,9 +48,10 @@ public class PlanQueryServiceImpl implements PlanQueryService {
     }
 
     @Override
-    public ResponseResult getTextByTitle(String title) {
+    public ResponseResult getTextByTitle(Integer documentId, String title) {
         try {
             LambdaQueryWrapper<Title> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(Title::getDocumentId, documentId);
             queryWrapper.eq(Title::getContent, title);
             Integer titleId = titleMapper.selectOne(queryWrapper).getId();
 
