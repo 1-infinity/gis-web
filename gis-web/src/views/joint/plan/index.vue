@@ -1,9 +1,4 @@
 <template>
-  <!--  <div slot="body" class="container offset-bottom">-->
-  <!--    <div  v-if="isfolw==true" style="height:100%;padding-top:44px;">-->
-  <!--      <iframe :src="flowSrc" style="height:100%; width:100%;margin:0;border:0;"> </iframe>-->
-  <!--    </div>-->
-  <!--  </div>-->
   <div class="app-container">
     <div v-if="is_select_category">
       <h1 style="text-align: center">欢迎您使用联防联控预案生成系统</h1>
