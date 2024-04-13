@@ -17,7 +17,6 @@ public class PlanQueryController {
         return planQueryService.getAllTitleByCityAndDisaster(city, disaster);
     }
 
-
     @PostMapping("/planQuery/getTextByTitle")
     public ResponseResult getTextByTitle(@RequestBody GetTextByTitleRequestType type) {
         return planQueryService.getTextByTitle(type.documentId, type.title);
