@@ -742,7 +742,6 @@
 </template>
 
 <script>
-import FileSaver from 'file-saver'
 import htmlDocx from 'html-docx-js/dist/html-docx'
 
 export default {

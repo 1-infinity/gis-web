@@ -3,11 +3,12 @@
     <div v-if="is_catalog">
       <el-row>
         <h1 style="text-align: center">南京市</h1>
-        <h3 style="text-align: center;color: #99a9bf">《2020年南京市防汛预案》</h3>
+        <h3 style="text-align: center;color: rgba(153,169,191,0.97)">《2020年南京市防汛预案》</h3>
       </el-row>
       <div>
         <el-checkbox-group v-model="selectedItems">
-          <el-checkbox class="list-group-item" v-for="item in items" :key="item.value" :label="item.value"
+          <el-checkbox class="list-group-item"
+                       v-for="item in items" :key="item.value" :label="item.value"
                        @change="handleSelectionChange($event,item.value)"
           >
             <el-row :span="24" :offset="5">
@@ -61,6 +62,7 @@ export default {
               this.selectedItems.push(subItem.value)
             }
           }
+          console.log(this.selectedItems)
         } else {
           // 取消选中了总标题，查找对应的小标题并设置为取消选中
           const subItems = this.items.filter(item => item.value.startsWith(label))
@@ -77,8 +79,8 @@ export default {
       this.is_catalog = false
       this.is_detailed_plan = true
     },
-    async getAllTitle() {
-      const res = await axios.get(`http://localhost:8080/planQuery/getAllTitle?city=南京市&disaster=洪水`)
+    async getAllTitle(city, disaster) {
+      const res = await axios.get(`http://localhost:8080/planQuery/getAllTitle?city=${city}&disaster=${disaster}`)
       res.data.data.forEach(title => {
         let item = {
           'label': title,
@@ -89,8 +91,8 @@ export default {
     }
   },
   mounted() {
-    // 当组件挂载到 DOM 后，从后端调用选项
-    this.getAllTitle()
+    // 当组件挂载到 DOM 后，从后端调用选项（标题）
+    this.getAllTitle('南京市', '洪水')
   }
 }
 </script>
@@ -109,7 +111,6 @@ export default {
 }
 
 .bg-purple-dark {
-  //background: #99a9bf;
   width: 700px;
 }
 
