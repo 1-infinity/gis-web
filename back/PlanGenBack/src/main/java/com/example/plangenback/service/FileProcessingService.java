@@ -5,5 +5,5 @@ import com.example.plangenback.model.PlanContentType;
 import java.util.List;
 
 public interface FileProcessingService {
-    public void addFile(String mainTitle, String city, String disaster, List<PlanContentType> contents);
+    public boolean addFile(String mainTitle, String city, String disaster, List<PlanContentType> contents);
 }

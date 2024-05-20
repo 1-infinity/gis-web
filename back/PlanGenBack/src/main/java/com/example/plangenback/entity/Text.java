@@ -17,4 +17,10 @@ public class Text {
     private Integer documentId;
     private Integer parentTitleId;
     private String content;
+
+    public Text(Integer documentId, Integer parentTitleId, String content) {
+        this.documentId = documentId;
+        this.parentTitleId = parentTitleId;
+        this.content = content;
+    }
 }

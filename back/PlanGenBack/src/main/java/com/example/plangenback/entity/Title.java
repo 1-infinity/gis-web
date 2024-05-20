@@ -18,4 +18,11 @@ public class Title {
     private Integer parentSecId;
     private String secNum;
     private String content;
+
+    public Title(Integer documentId, Integer parentSecId, String secNum, String content) {
+        this.documentId = documentId;
+        this.parentSecId = parentSecId;
+        this.secNum = secNum;
+        this.content = content;
+    }
 }

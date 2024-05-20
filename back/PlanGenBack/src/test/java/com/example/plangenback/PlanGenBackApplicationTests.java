@@ -7,7 +7,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 class PlanGenBackApplicationTests {
 
     @Test
-    void contextLoads() {
+    public void test() {
+        String s = "0";
+        System.out.println("0".compareTo(s));
     }
 
 }
