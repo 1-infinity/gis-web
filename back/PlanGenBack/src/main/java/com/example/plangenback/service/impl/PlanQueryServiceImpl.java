@@ -63,7 +63,15 @@ public class PlanQueryServiceImpl implements PlanQueryService {
 
                 LambdaQueryWrapper<Text> queryWrapper1 = new LambdaQueryWrapper<>();
                 queryWrapper1.eq(Text::getParentTitleId, titleId);
-                String txt = textMapper.selectOne(queryWrapper1).getContent();
+                Text text1 = textMapper.selectOne(queryWrapper1);
+                String txt;
+                if (text1 != null) {
+                    txt = text1.getContent();
+                }
+                else {
+                    txt = null;
+                }
+
 
                 Map<String, Object> textInfo = new HashMap<>();
                 textInfo.put("title", s);
