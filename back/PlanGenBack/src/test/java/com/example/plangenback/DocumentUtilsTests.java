@@ -11,17 +11,17 @@ public class DocumentUtilsTests {
 
     @Test
     public void readDocumentUtilTest() {
-//        System.out.println(DocumentUtils.readDocument(".\\planFiles\\flood_plan_undefined2.docx"));
+        System.out.println(DocumentUtils.readDocumentByPath(".\\planFiles\\flood_plan_undefined2.docx"));
     }
 
     @Autowired
     private FileProcessingService fileProcessingService;
     @Test
     public void addDocumentTest() {
-//        String mainTitle = "洪涝灾害预案";
-//        String city = "南京市";
-//        String disaster = "洪水";
-//        String filePath = ".\\planFiles\\flood_plan_undefined2.docx";
-//        System.out.println(fileProcessingService.addFile(mainTitle, city, disaster, DocumentUtils.readDocument(filePath)));
+        String mainTitle = "洪涝灾害预案";
+        String city = "南京市";
+        String disaster = "洪水";
+        String filePath = ".\\planFiles\\flood_plan_undefined2.docx";
+        System.out.println(fileProcessingService.addFile(mainTitle, city, disaster, DocumentUtils.readDocumentByPath(filePath)));
     }
 }
