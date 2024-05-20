@@ -72,7 +72,6 @@ public class PlanQueryServiceImpl implements PlanQueryService {
                     txt = null;
                 }
 
-
                 Map<String, Object> textInfo = new HashMap<>();
                 textInfo.put("title", s);
                 textInfo.put("content", txt);

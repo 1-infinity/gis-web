@@ -1,39 +1,38 @@
 <template>
   <div>
-    <div v-if="is_catalog">
-      <el-row>
-        <h1 style="text-align: center">南京市</h1>
-        <h3 style="text-align: center;color: rgba(153,169,191,0.97)">{{ mainTitle }}</h3>
-      </el-row>
-      <div>
-        <el-checkbox-group v-model="selectedItems">
-          <el-checkbox
-            class="list-group-item"
-            v-for="item in items"
-            :key="item.value"
-            :label="item.value"
-            @change="handleSelectionChange($event,item.value)"
+    <el-row>
+      <h1 style="text-align: center">南京市</h1>
+      <h3 style="text-align: center;color: rgba(153,169,191,0.97)">{{ mainTitle }}</h3>
+    </el-row>
+    <div>
+      <el-checkbox-group v-model="selectedItems">
+        <el-checkbox
+          class="list-group-item"
+          v-for="item in items"
+          :key="item.value"
+          :label="item.value"
+          @change="handleSelectionChange($event,item.value)"
+        >
+          <el-row
+            :span="24"
+            :offset="5"
           >
-            <el-row
-              :span="24"
-              :offset="5"
-            >
-              <div class="grid-content bg-purple-dark">
-                {{ item.value }}
-              </div>
-            </el-row>
-          </el-checkbox>
-        </el-checkbox-group>
-      </div>
-      <div>
-        <el-button
-          type="primary"
-          style="margin-left: 45%;margin-top: 100px"
-          @click="get_detailed_plan"
-        >查看预案
-        </el-button>
-      </div>
+            <div class="grid-content bg-purple-dark">
+              {{ item.value }}
+            </div>
+          </el-row>
+        </el-checkbox>
+      </el-checkbox-group>
     </div>
+    <div>
+      <el-button
+        type="primary"
+        style="margin-left: 45%;margin-top: 100px"
+        @click="get_detailed_plan"
+      >查看预案
+      </el-button>
+    </div>
+
     <div v-if="is_detailed_plan">
       <DetailedPlan
         :ChosedItem="selectedItems"
@@ -43,24 +42,15 @@
       >
       </DetailedPlan>
     </div>
-    <div>
-      <input
-        type="file"
-        ref="fileInput"
-      >
-      <button @click="uploadFile">上传文件</button>
-      
-    </div>
   </div>
 </template>
-
-<script>
+  
+  <script>
 import axios from "axios";
 import DetailedPlan from "@/views/application/jointplan/DetailedPlan.vue";
-// import UploadFile from '@/components/UploadFile/index.vue'
 
 export default {
-  name: "JointPlan",
+  name: "flood_nanjing",
   components: { DetailedPlan },
   data() {
     return {
@@ -125,31 +115,6 @@ export default {
         this.items.push(item);
       });
     },
-    uploadFile() {
-      const fileInput = this.$refs.fileInput;
-      const file = fileInput.files[0]; // 获取文件对象
-      console.log(file);
-      if (!file) {
-        alert("请选择文件");
-        return;
-      }
-
-      const formData = new FormData(); // 创建表单数据对象
-      formData.append("file", file); // 将文件对象添加到表单数据中
-      console.log(formData);
-      axios
-        .post("/api/upload", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data", // 设置请求头，表明发送的是 FormData 格式的数据
-          },
-        })
-        .then((response) => {
-          console.log("文件上传成功", response.data);
-        })
-        .catch((error) => {
-          console.error("上传失败", error);
-        });
-    },
   },
   mounted() {
     // 当组件挂载到 DOM 后，从后端调用选项（标题）
@@ -157,8 +122,8 @@ export default {
   },
 };
 </script>
-
-<style>
+  
+  <style>
 .list-group-item {
   margin-left: 20%;
 }
@@ -180,3 +145,4 @@ export default {
   min-height: 36px;
 }
 </style>
+  
