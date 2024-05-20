@@ -4,6 +4,15 @@
       <div style="text-align: center">
         <h1>洪涝灾害预案</h1>
       </div>
+      <div
+        v-for="detailPlanItem in detailPlanItems"
+        :key="detailPlanItem.title"
+      >
+        <h1 v-if="detailPlanItem.title.toString().split(' ')[0].length == 1">{{ detailPlanItem.title }}</h1>
+        <h2 v-else-if="detailPlanItem.title.toString().split(' ')[0].length == 3">{{ detailPlanItem.title }}</h2>
+        <h3 v-else-if="detailPlanItem.title.toString().split(' ')[0].length == 5">{{ detailPlanItem.title }}</h3>
+        <p>{{ detailPlanItem.content }}</p>
+      </div>
       <div>
         <div>
           <h1 v-if="ChosedItem.some(item => item.startsWith('1'))">1 总则</h1>
@@ -56,7 +65,7 @@
           <h1 v-if="ChosedItem.some(item => item.startsWith('2'))">2 组织体系</h1>
           <p v-if="ChosedItem.some(item => item.startsWith('2'))">
             市政府设立市防汛防旱指挥部（以下简称市防指），
-            <modify class="update">下设滁河、沙洲圩地区防汛联防指挥部。</modify>
+            下设滁河、沙洲圩地区防汛联防指挥部。
             区政府设立本级防汛防旱指挥机构。有关单位可根据需要设立防汛指挥机构，负责本单位防汛工作，并服从当地防汛指挥机构的统一指挥。
           </p>
           <div v-if="ChosedItem.indexOf('2-1')!==-1">
@@ -172,16 +181,28 @@
                 南京海事局：负责发布长江航行通（警）告，督促和指导船舶安全避险，及时开展遇险船舶搜寻救助。
               </modify>
             </p>
-            <p data-c="99_2_1" class="c">
+            <p
+              data-c="99_2_1"
+              class="c"
+            >
               市水务局：负责组织全市洪涝灾害防治体系建设，组织实施水务工程防汛消险、积淹水点整治等；承担水情监测预警及信息发布；统筹指导全市水务工程安全运行管理，负责水工程调度；承担市级防汛物资管理；承担防御洪水和城市内涝应急抢险的技术支撑工作。
             </p>
-            <p data-c="99_2_1" class="c">
+            <p
+              data-c="99_2_1"
+              class="c"
+            >
               市应急管理局：负责组织协调应急抢险救援力量；组织协调灾害救助，负责调拨市级救灾物资；承担灾情统计。
             </p>
-            <p data-c="99_2_1" class="c">
+            <p
+              data-c="99_2_1"
+              class="c"
+            >
               市城建集团：负责所属企业及其承担建设和管理项目的防汛工作。
             </p>
-            <p data-c="99_2_1" class="c">
+            <p
+              data-c="99_2_1"
+              class="c"
+            >
               市交通集团：负责所属企业及其承担建设和管理项目的防汛工作。
             </p>
             <p>
@@ -736,63 +757,97 @@
         </div>
       </div>
     </div>
-    <el-button type="primary" style="margin-left: 45%;margin-top: 50px" @click="exportToWord">导出预案</el-button>
-    <el-button type="primary" @click="lastStep">返回上一步</el-button>
+    <el-button
+      type="primary"
+      style="margin-left: 45%;margin-top: 50px"
+      @click="exportToWord"
+    >导出预案</el-button>
+    <el-button
+      type="primary"
+      @click="lastStep"
+    >返回上一步</el-button>
   </div>
 </template>
 
 <script>
-import htmlDocx from 'html-docx-js/dist/html-docx'
+import htmlDocx from "html-docx-js/dist/html-docx";
+import axios from "axios";
 
 export default {
-  name: 'detailed_plan_nanjing',
-  props:
-    {
-      ChosedItem: {
-        type: Array
-      },
-      items: {
-        type: Array
-      },
-      city: {
-        type: String
-      }
+  name: "detailed_plan_nanjing",
+  props: {
+    ChosedItem: {
+      type: Array,
     },
+    items: {
+      type: Array,
+    },
+    documentId: {
+      type: Number,
+    },
+    city: {
+      type: String,
+    },
+  },
   data() {
     return {
-      // should_show
-    }
+      detailPlanItems: [],
+    };
   },
   mounted() {
-    let elems = document.getElementsByClassName('update')
-    for (let i = 0; i < elems.length; i++) {
-      elems[i].setAttribute('contenteditable', 'true')
-    }
+    this.getDetailedPlan();
   },
   methods: {
+    // 对标题进行排序
+    sortTitile() {
+      this.ChosedItem.sort();
+    },
+    // 获取文件详细信息
+    async getDetailedPlan() {
+      this.sortTitile();
+      try {
+        const params = {
+          documentId: this.documentId,
+          title: this.ChosedItem,
+        };
+        const res = await axios.post(
+          `http://localhost:8080/planQuery/getTextByTitle`,
+          params
+        );
+        res.data.data.forEach((paragraph) => {
+          let item = {
+            title: paragraph.title,
+            content: paragraph.content,
+          };
+          this.detailPlanItems.push(item);
+        });
+      } catch (e) {
+        console.error("Error fetching data:", e);
+      }
+    },
+    // 导出文件
     exportToWord() {
       // 获取要导出的 <div> 元素
-      const divElement = document.getElementById('exportContent')
+      const divElement = document.getElementById("exportContent");
 
       // 获取 <div> 元素的 HTML 内容
-      const htmlContent = divElement.innerHTML
+      const htmlContent = divElement.innerHTML;
       // 转换 HTML 为 Word 文档
-      const convertedContent = htmlDocx.asBlob(htmlContent)
+      const convertedContent = htmlDocx.asBlob(htmlContent);
 
       // 创建一个下载链接并触发下载
-      const downloadLink = document.createElement('a')
-      downloadLink.href = URL.createObjectURL(convertedContent)
-      downloadLink.download = 'flood_plan_' + this.city + '.docx'
-      downloadLink.click()
+      const downloadLink = document.createElement("a");
+      downloadLink.href = URL.createObjectURL(convertedContent);
+      downloadLink.download = "flood_plan_" + this.city + ".docx";
+      downloadLink.click();
     },
+    // 回退
     lastStep() {
-      this.$emit('lastStep')
-    }
-  }
-}
-
+      this.$emit("back");
+    },
+  },
+};
 </script>
 
 <style>
-
 </style>
