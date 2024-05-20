@@ -2,9 +2,10 @@ package com.example.plangenback.controller;
 
 import com.example.plangenback.model.ResponseResult;
 import com.example.plangenback.service.FileProcessingService;
-import com.example.plangenback.utils.FileUtils;
+import com.example.plangenback.utils.DocumentUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @CrossOrigin
@@ -12,9 +13,19 @@ public class FileProcessingController {
     @Autowired
     private FileProcessingService fileProcessingService;
 
-    @PostMapping("/document/addDocument")
+    @PostMapping("/document/addDocumentByURL")
     public ResponseResult addDocument(@RequestParam String mainTitle, String city, String disaster, String filePath) {
-        if (fileProcessingService.addFile(mainTitle, city, disaster, FileUtils.readDocument(filePath))) {
+        if (fileProcessingService.addFile(mainTitle, city, disaster, DocumentUtils.readDocumentByPath(filePath))) {
+            return new ResponseResult<>(200, "success", null);
+        }
+        else {
+            return new ResponseResult<>(500, "Add Document Failed", null);
+        }
+    }
+
+    @PostMapping("/document/addDocumentByFile")
+    public ResponseResult addDocument(@RequestParam String mainTitle, String city, String disaster, MultipartFile file) {
+        if (fileProcessingService.addFile(mainTitle, city, disaster, DocumentUtils.readDocument(file))) {
             return new ResponseResult<>(200, "success", null);
         }
         else {
