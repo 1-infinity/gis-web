@@ -49,7 +49,7 @@
         ref="fileInput"
       >
       <button @click="uploadFile">上传文件</button>
-      
+
     </div>
   </div>
 </template>
@@ -129,6 +129,7 @@ export default {
       const fileInput = this.$refs.fileInput;
       const file = fileInput.files[0]; // 获取文件对象
       console.log(file);
+
       if (!file) {
         alert("请选择文件");
         return;
@@ -136,9 +137,16 @@ export default {
 
       const formData = new FormData(); // 创建表单数据对象
       formData.append("file", file); // 将文件对象添加到表单数据中
-      console.log(formData);
+      formData.append("mainTitle", "南京"); // 将文件对象添加到表单数据中
+      formData.append("city", "南京市"); // 将文件对象添加到表单数据中
+      formData.append("disaster", "洪涝"); // 将文件对象添加到表单数据中
+      // 输出 FormData 的内容到控制台
+      for (const entry of formData.entries()) {
+        console.log(entry);
+      }
+      
       axios
-        .post("/api/upload", formData, {
+        .post("http://localhost:8080/document/addDocumentByFile", formData, {
           headers: {
             "Content-Type": "multipart/form-data", // 设置请求头，表明发送的是 FormData 格式的数据
           },
