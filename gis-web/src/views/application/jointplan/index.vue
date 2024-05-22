@@ -116,6 +116,7 @@ export default {
       const res = await axios.get(
         `http://localhost:8080/planQuery/getAllTitle?city=${city}&disaster=${disaster}`
       );
+      console.log(res)
       this.documentId = res.data.data.documentId;
       this.mainTitle = res.data.data.mainTitle;
       res.data.data.titleList.forEach((title) => {
