@@ -68,7 +68,7 @@ public class PlanQueryServiceImpl implements PlanQueryService {
                         return Integer.compare(num1, num2);
                     }
                 }
-                return 0; // 两个版本号完全相等
+                return 0;
             });
 
             return new ResponseResult<>(200, "success", result);
