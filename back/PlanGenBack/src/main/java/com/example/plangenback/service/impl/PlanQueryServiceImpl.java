@@ -1,6 +1,7 @@
 package com.example.plangenback.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.plangenback.entity.Document;
 import com.example.plangenback.entity.Text;
 import com.example.plangenback.entity.Title;
@@ -28,26 +29,36 @@ public class PlanQueryServiceImpl implements PlanQueryService {
     @Autowired
     private TextMapper textMapper;
 
+
     @Override
-    public ResponseResult getAllTitleByCityAndDisaster(String city, String disaster) {
+    public ResponseResult getAllDocuments(String city, String disaster) {
+        try {
+            QueryWrapper<Document> queryWrapper = new QueryWrapper<>();
+            queryWrapper.select("id", "main_title", "update_time")
+                    .eq("city", city)
+                    .eq("disaster", disaster);
+            return new ResponseResult(200, "success", documentMapper.selectList(queryWrapper));
+        }
+        catch (Exception e) {
+            return new ResponseResult(500, e.getMessage());
+        }
+    }
+
+    @Override
+    public ResponseResult getAllTitleById(Integer id, String mainTitle) {
         try {
             Map<String, Object> result = new HashMap<>();
 
-            LambdaQueryWrapper<Document> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.eq(Document::getCity, city);
-            queryWrapper.eq(Document::getDisaster, disaster);
-            Integer documentId = documentMapper.selectOne(queryWrapper).getId();
-            result.put("documentId", documentId);
-            result.put("mainTitle", documentMapper.selectOne(queryWrapper).getMainTitle());
+            result.put("documentId", id);
+            result.put("mainTitle", mainTitle);
 
             LambdaQueryWrapper<Title> queryWrapper2 = new LambdaQueryWrapper<>();
-            queryWrapper2.eq(Title::getDocumentId, documentId);
+            queryWrapper2.eq(Title::getDocumentId, id);
             queryWrapper2.orderByAsc(Title::getSecNum);
             List<String> titleList = titleMapper.selectList(queryWrapper2)
                     .stream().map(Title::getContent).collect(Collectors.toList());
             result.put("titleList", titleList);
 
-            titleList.sort(Comparator.naturalOrder());
             titleList.sort((o1, o2) -> {
                 String id1 = TitleUtils.getTitleSec(o1);
                 String id2 = TitleUtils.getTitleSec(o2);
