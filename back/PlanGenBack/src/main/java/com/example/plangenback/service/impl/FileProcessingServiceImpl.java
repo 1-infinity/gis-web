@@ -9,6 +9,7 @@ import com.example.plangenback.service.FileProcessingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class FileProcessingServiceImpl implements FileProcessingService {
         try {
             System.out.println(contents);
             //创建一个新的document
-            Document document = new Document(mainTitle, city, disaster);
+            Document document = new Document(mainTitle, city, disaster, LocalDateTime.now());
             documentMapper.insert(document);
             Integer documentId = document.getId();
 

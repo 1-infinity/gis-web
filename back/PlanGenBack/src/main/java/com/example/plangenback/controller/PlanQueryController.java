@@ -12,9 +12,14 @@ public class PlanQueryController {
     @Autowired
     public PlanQueryService planQueryService;
 
+    @GetMapping("/planQuery/getAllDocuments")
+    public ResponseResult getAllDocuments(@RequestParam String city, String disaster) {
+        return planQueryService.getAllDocuments(city, disaster);
+    }
+
     @GetMapping("/planQuery/getAllTitle")
-    public ResponseResult getAllTitleByCityAndDisaster(@RequestParam String city, String disaster) {
-        return planQueryService.getAllTitleByCityAndDisaster(city, disaster);
+    public ResponseResult getAllTitleById(@RequestParam Integer id, String mainTitle) {
+        return planQueryService.getAllTitleById(id, mainTitle);
     }
 
     @PostMapping("/planQuery/getTextByTitle")
