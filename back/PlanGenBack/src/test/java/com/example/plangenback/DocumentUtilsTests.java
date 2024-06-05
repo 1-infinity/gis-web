@@ -1,17 +1,17 @@
 package com.example.plangenback;
 
 import com.example.plangenback.service.FileProcessingService;
-import com.example.plangenback.utils.FileUtils;
+import com.example.plangenback.utils.DocumentUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class FileUtilsTests {
+public class DocumentUtilsTests {
 
     @Test
     public void readDocumentUtilTest() {
-        System.out.println(FileUtils.readDocument(".\\planFiles\\flood_plan_undefined2.docx"));
+        System.out.println(DocumentUtils.readDocumentByPath(".\\planFiles\\flood_plan_undefined2.docx"));
     }
 
     @Autowired
@@ -22,6 +22,6 @@ public class FileUtilsTests {
         String city = "南京市";
         String disaster = "洪水";
         String filePath = ".\\planFiles\\flood_plan_undefined2.docx";
-        System.out.println(fileProcessingService.addFile(mainTitle, city, disaster, FileUtils.readDocument(filePath)));
+        System.out.println(fileProcessingService.addFile(mainTitle, city, disaster, DocumentUtils.readDocumentByPath(filePath)));
     }
 }

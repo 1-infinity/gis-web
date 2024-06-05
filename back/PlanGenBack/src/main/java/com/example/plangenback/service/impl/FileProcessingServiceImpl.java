@@ -28,6 +28,7 @@ public class FileProcessingServiceImpl implements FileProcessingService {
 
     public boolean addFile(String mainTitle, String city, String disaster, List<PlanContentType> contents) {
         try {
+            System.out.println(contents);
             //创建一个新的document
             Document document = new Document(mainTitle, city, disaster);
             documentMapper.insert(document);

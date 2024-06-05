@@ -1,5 +1,17 @@
 <template>
   <div>
+    <div style="display: flex; justify-content: flex-end;">
+      <el-button
+        style="margin-right: 10px;margin-top: 10px;"
+        size="small"
+        type="success"
+        @click="uploadFile"
+      >上传文件</el-button>
+    </div>
+    <UploadJointPlan
+      :dialog="is_UploadJointPlan"
+      @closeDialog="closeDialog"
+    ></UploadJointPlan>
     <div v-if="is_catalog">
       <el-row>
         <h1 style="text-align: center">南京市</h1>
@@ -43,31 +55,25 @@
       >
       </DetailedPlan>
     </div>
-    <div>
-      <input
-        type="file"
-        ref="fileInput"
-      >
-      <button @click="uploadFile">上传文件</button>
-      
-    </div>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import DetailedPlan from "@/views/application/jointplan/DetailedPlan.vue";
-// import UploadFile from '@/components/UploadFile/index.vue'
+import UploadJointPlan from "@/components/UploadFile/UploadJointPlan.vue";
+import { getTaskResult } from "@/views/application/requestUtils.js";
 
 export default {
   name: "JointPlan",
-  components: { DetailedPlan },
+  components: { DetailedPlan, UploadJointPlan },
   data() {
     return {
       selectedItems: [],
       items: [],
       is_catalog: true,
       is_detailed_plan: false,
+      is_UploadJointPlan: false,
       // 文件的id
       documentId: 0,
       // 文件标题
@@ -104,6 +110,9 @@ export default {
         }
       }
     },
+    closeDialog() {
+      this.is_UploadJointPlan = false;
+    },
     back() {
       this.is_catalog = true;
       this.is_detailed_plan = false;
@@ -116,6 +125,7 @@ export default {
       const res = await axios.get(
         `http://localhost:8080/planQuery/getAllTitle?city=${city}&disaster=${disaster}`
       );
+      console.log(res)
       this.documentId = res.data.data.documentId;
       this.mainTitle = res.data.data.mainTitle;
       res.data.data.titleList.forEach((title) => {
@@ -126,34 +136,13 @@ export default {
       });
     },
     uploadFile() {
-      const fileInput = this.$refs.fileInput;
-      const file = fileInput.files[0]; // 获取文件对象
-      console.log(file);
-      if (!file) {
-        alert("请选择文件");
-        return;
-      }
-
-      const formData = new FormData(); // 创建表单数据对象
-      formData.append("file", file); // 将文件对象添加到表单数据中
-      console.log(formData);
-      axios
-        .post("/api/upload", formData, {
-          headers: {
-            "Content-Type": "multipart/form-data", // 设置请求头，表明发送的是 FormData 格式的数据
-          },
-        })
-        .then((response) => {
-          console.log("文件上传成功", response.data);
-        })
-        .catch((error) => {
-          console.error("上传失败", error);
-        });
+      this.is_UploadJointPlan = true;
     },
   },
   mounted() {
     // 当组件挂载到 DOM 后，从后端调用选项（标题）
     this.getAllTitle("南京市", "洪水");
+    requestUtils.getTaskResult();
   },
 };
 </script>
