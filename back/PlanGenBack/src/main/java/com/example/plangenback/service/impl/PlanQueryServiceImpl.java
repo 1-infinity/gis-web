@@ -124,4 +124,25 @@ public class PlanQueryServiceImpl implements PlanQueryService {
             return new ResponseResult<>(500, e.getMessage());
         }
     }
+
+    @Override
+    public ResponseResult deleteDocumentById(Integer documentId) {
+        try {
+            LambdaQueryWrapper<Document> documentWrapper = new LambdaQueryWrapper<>();
+            LambdaQueryWrapper<Title> titleWrapper = new LambdaQueryWrapper<>();
+            LambdaQueryWrapper<Text> textWrapper = new LambdaQueryWrapper<>();
+            documentWrapper.eq(Document::getId, documentId);
+            titleWrapper.eq(Title::getDocumentId, documentId);
+            textWrapper.eq(Text::getDocumentId, documentId);
+
+            Integer textDelRows = textMapper.delete(textWrapper);
+            Integer titleDelRows = titleMapper.delete(titleWrapper);
+            Integer documentDelRows = documentMapper.delete(documentWrapper);
+
+            return new ResponseResult(200, "Deleted rows: " + "Document " + documentDelRows + " Title " + titleDelRows + " Text: " + textDelRows);
+        }
+        catch (Exception e) {
+            return new ResponseResult(500, e.getMessage());
+        }
+    }
 }

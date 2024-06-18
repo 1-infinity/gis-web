@@ -9,4 +9,5 @@ public interface PlanQueryService {
     ResponseResult getAllDocuments(String city, String disaster);
     ResponseResult getAllTitleById(Integer id, String mainTitle);
     ResponseResult getTextByTitle(Integer documentId, List<String> title);
+    ResponseResult deleteDocumentById(Integer documentId);
 }
