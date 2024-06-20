@@ -27,4 +27,8 @@ public class PlanQueryController {
         return planQueryService.getTextByTitle(type.documentId, type.title);
     }
 
+    @DeleteMapping("planQuery/deleteDocumentById")
+    public ResponseResult deleteDocumentById(@RequestParam Integer documentId) {
+        return planQueryService.deleteDocumentById(documentId);
+    }
 }
