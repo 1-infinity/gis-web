@@ -34,12 +34,11 @@ public class PlanQueryServiceImpl implements PlanQueryService {
     public ResponseResult getAllDocuments(String city, String disaster) {
         try {
             QueryWrapper<Document> queryWrapper = new QueryWrapper<>();
-            queryWrapper.select("id", "main_title", "update_time")
+            queryWrapper.select("id", "main_title", "city", "disaster", "update_time")
                     .eq("city", city)
                     .eq("disaster", disaster);
             return new ResponseResult(200, "success", documentMapper.selectList(queryWrapper));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return new ResponseResult(500, e.getMessage());
         }
     }
@@ -83,8 +82,7 @@ public class PlanQueryServiceImpl implements PlanQueryService {
             });
 
             return new ResponseResult<>(200, "success", result);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return new ResponseResult<>(500, e.getMessage());
         }
     }
@@ -105,8 +103,7 @@ public class PlanQueryServiceImpl implements PlanQueryService {
                 String txt;
                 if (text1 != null) {
                     txt = text1.getContent();
-                }
-                else {
+                } else {
                     txt = null;
                 }
 
@@ -117,10 +114,8 @@ public class PlanQueryServiceImpl implements PlanQueryService {
             }
 
 
-
             return new ResponseResult<>(200, "success", text);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return new ResponseResult<>(500, e.getMessage());
         }
     }
@@ -140,8 +135,7 @@ public class PlanQueryServiceImpl implements PlanQueryService {
             Integer documentDelRows = documentMapper.delete(documentWrapper);
 
             return new ResponseResult(200, "Deleted rows: " + "Document " + documentDelRows + " Title " + titleDelRows + " Text: " + textDelRows);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return new ResponseResult(500, e.getMessage());
         }
     }

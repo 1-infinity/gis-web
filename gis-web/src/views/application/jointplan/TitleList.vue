@@ -1,11 +1,11 @@
 <template>
   <div>
     <el-row>
-      <h1 style="text-align: center">南京市</h1>
-      <h3 style="text-align: center;color: rgba(153,169,191,0.97)">{{ mainTitle }}</h3>
+      <h1 style="text-align: center">{{ template.city }}市</h1>
+      <h3 style="text-align: center;color: rgba(153,169,191,0.97)">{{ template.mainTitle }}</h3>
     </el-row>
     <div>
-      <el-checkbox-group v-model="selectedItems">
+      <el-checkbox-group v-model="selectedItems" class="title-list">
         <el-checkbox
           class="list-group-item"
           v-for="item in items"
@@ -13,127 +13,113 @@
           :label="item.value"
           @change="handleSelectionChange($event,item.value)"
         >
-          <el-row
-            :span="24"
-            :offset="5"
-          >
-            <div class="grid-content bg-purple-dark">
-              {{ item.value }}
-            </div>
+          <el-row>
+            <h2
+              v-if="item.value.split('.').length - 1 === 0"
+              class="grid-content bg-purple-dark"
+            >{{ item.value }}</h2>
+            <h3
+              v-else-if="item.value.split('.').length - 1 === 1"
+              class="grid-content bg-purple-dark"
+            >{{ item.value }}</h3>
+            <h4
+              v-else-if="item.value.split('.').length - 1 === 2"
+              class="grid-content bg-purple-dark"
+            >{{ item.value }}</h4>
+            <h5
+              v-else-if="item.value.split('.').length - 1 === 3"
+              class="grid-content bg-purple-dark"
+            >{{ item.value }}</h5>
+            <div v-else class="grid-content bg-purple-dark">{{ item.value }}</div>
           </el-row>
         </el-checkbox>
       </el-checkbox-group>
-    </div>
-    <div>
-      <el-button
-        type="primary"
-        style="margin-left: 45%;margin-top: 100px"
-        @click="get_detailed_plan"
-      >查看预案
-      </el-button>
-    </div>
-
-    <div v-if="is_detailed_plan">
-      <DetailedPlan
-        :ChosedItem="selectedItems"
-        :itmes="items"
-        :documentId="documentId"
-        @back="back"
-      >
-      </DetailedPlan>
     </div>
   </div>
 </template>
   
   <script>
 import axios from "axios";
-import DetailedPlan from "@/views/application/jointplan/DetailedPlan.vue";
 
 export default {
-  name: "flood_nanjing",
-  components: { DetailedPlan },
+  name: "TitleList",
   data() {
     return {
       selectedItems: [],
       items: [],
-      is_catalog: true,
-      is_detailed_plan: false,
-      // 文件的id
-      documentId: 0,
-      // 文件标题
-      mainTitle: "",
     };
+  },
+  props: {
+    template: {
+      type: Object,
+    },
   },
   methods: {
     handleSelectionChange(event, label) {
       label = label.split(" ")[0];
-      if (label.length === 1) {
-        //说明此时为一个大章节的总标题，需要将其他小标题也设置为点击
-        if (event === true) {
-          //说明选上了总标题
-          // 选中了总标题，查找对应的小标题并设置为选中
-          const subItems = this.items.filter((item) =>
-            item.value.startsWith(label)
-          );
+
+      //说明此时为一个大章节的总标题，需要将其他小标题也设置为点击
+      if (event === true) {
+        //说明选上了总标题
+        // 选中了总标题，查找对应的小标题并设置为选中
+        const subItems = this.items.filter((item) =>
+          item.value.startsWith(label)
+        );
+        if (subItems.length > 0) {
           for (const subItem of subItems) {
             if (this.selectedItems.indexOf(subItem.value) === -1) {
               this.selectedItems.push(subItem.value);
             }
           }
-        } else {
-          // 取消选中了总标题，查找对应的小标题并设置为取消选中
-          const subItems = this.items.filter((item) =>
-            item.value.startsWith(label)
-          );
-          for (const subItem of subItems) {
-            const index = this.selectedItems.indexOf(subItem.value);
-            if (index !== -1) {
-              this.selectedItems.splice(index, 1);
-            }
+        }
+      } else {
+        // 取消选中了总标题，查找对应的小标题并设置为取消选中
+        const subItems = this.items.filter((item) =>
+          item.value.startsWith(label)
+        );
+        for (const subItem of subItems) {
+          const index = this.selectedItems.indexOf(subItem.value);
+          if (index !== -1) {
+            this.selectedItems.splice(index, 1);
           }
         }
       }
+
+      // 发送数据
+      this.$emit("selectionChange", this.selectedItems);
     },
-    back() {
-      this.is_catalog = true;
-      this.is_detailed_plan = false;
-    },
-    get_detailed_plan() {
-      this.is_catalog = false;
-      this.is_detailed_plan = true;
-    },
-    async getAllTitle(city, disaster) {
+    async getAllTitle(id, mainTitle) {
       const res = await axios.get(
-        `http://localhost:8080/planQuery/getAllTitle?city=${city}&disaster=${disaster}`
+        `http://localhost:8080/planQuery/getAllTitle?id=${id}&mainTitle=${mainTitle}`
       );
-      this.documentId = res.data.data.documentId;
-      this.mainTitle = res.data.data.mainTitle;
-      res.data.data.titleList.forEach((title) => {
-        let item = {
-          value: title,
-        };
-        this.items.push(item);
-      });
+      if (res) {
+        res.data.data.titleList.forEach((title) => {
+          let item = {
+            value: title,
+          };
+          this.items.push(item);
+        });
+      }
     },
   },
   mounted() {
+    this.selectedItems = [];
+    this.$emit("selectionChange", this.selectedItems);
     // 当组件挂载到 DOM 后，从后端调用选项（标题）
-    this.getAllTitle("南京市", "洪水");
+    this.getAllTitle(this.template.id, this.template.mainTitle);
   },
 };
 </script>
   
-  <style>
-.list-group-item {
-  margin-left: 20%;
+<style scoped>
+.title-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .el-row {
   margin-bottom: 20px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
 }
 
 .bg-purple-dark {
@@ -142,7 +128,6 @@ export default {
 
 .grid-content {
   border-radius: 4px;
-  min-height: 36px;
 }
 </style>
   
